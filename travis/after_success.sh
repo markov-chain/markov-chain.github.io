@@ -2,6 +2,8 @@
 
 set -ev
 
+env
+
 git config user.name "Travis CI"
 git config user.email ""
 
