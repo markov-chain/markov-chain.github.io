@@ -2,6 +2,10 @@
 
 set -ev
 
+if [ ! -z "${RUSTDOC_VERSION}" ] && [ "${RUSTDOC_VERSION}" != "${TRAVIS_RUST_VERSION}" ]; then
+  exit
+fi
+
 git config user.name "Travis CI"
 git config user.email ""
 
@@ -20,6 +24,6 @@ cargo doc ${CARGO_FLAGS}
 echo "${HTML}" > target/doc/index.html
 
 pip install ghp-import --user ${USER}
-$HOME/.local/bin/ghp-import -m 'Update the documentation' -n target/doc
+${HOME}/.local/bin/ghp-import -m 'Update the documentation' -n target/doc
 
 git push -qf https://${GITHUB_TOKEN}@github.com/${TRAVIS_REPO_SLUG}.git gh-pages
